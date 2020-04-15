@@ -11,4 +11,6 @@ database:
   port: 5432
   username: postgres
   password: postgres
-  
+
+server:
+  port:1808
