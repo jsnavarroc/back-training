@@ -1,6 +1,7 @@
 spring:
-  profile:
-    active: prod
+  profiles:
+    active: dev
+
 
 server:
   port:1808
