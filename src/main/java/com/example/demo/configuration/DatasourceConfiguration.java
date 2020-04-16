@@ -25,8 +25,8 @@ public class DatasourceConfiguration {
     }
 
     @Bean
-    @Profile({"dev"})
     public DataSource hikariDatasource(DatabaseCredentials credentials){
+        System.out.println("credentials>>>"+credentials);
         HikariConfig config = new HikariConfig();
         String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", credentials.getHost(), credentials.getPort(), credentials.getDatabase() );
         config.setJdbcUrl(jdbcUrl);
