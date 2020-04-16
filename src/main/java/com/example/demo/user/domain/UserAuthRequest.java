@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value(staticConstructor = "from")
 public class UserAuthRequest {
-    String username;
+    UserName username;
     String password;
 }
