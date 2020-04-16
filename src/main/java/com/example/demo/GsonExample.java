@@ -19,7 +19,8 @@ public class GsonExample {
                 userName,
                 password
         );
-
+        // Se deserealiza para ser leido
         System.out.println(gson.toJson(request));
+        System.out.println(gson.fromJson("{\"username\":\"test-username\",\"password\":\"password...\"}", UserAuthRequest.class));
     }
 }

@@ -10,7 +10,8 @@ public class UserNameAdapter implements JsonDeserializer<UserName>, JsonSerializ
 
     @Override
     public UserName deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        return null;
+        String value = jsonElement.getAsString();
+        return UserName.of(value);
     }
 
     @Override
