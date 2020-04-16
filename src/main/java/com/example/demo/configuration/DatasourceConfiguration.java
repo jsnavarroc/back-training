@@ -25,16 +25,14 @@ public class DatasourceConfiguration {
     }
 
     @Bean
-    @Profile({"dev","prod"})
+    @Profile({"dev"})
     public DataSource hikariDatasource(DatabaseCredentials credentials){
         HikariConfig config = new HikariConfig();
-        String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", credentials.getHost(), credentials.getPassword(), credentials.getDatabase() );
+        String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", credentials.getHost(), credentials.getPort(), credentials.getDatabase() );
         config.setJdbcUrl(jdbcUrl);
+        config.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
         config.setUsername(credentials.getUsername());
         config.setPassword(credentials.getPassword());
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
         return new HikariDataSource(config);
 
