@@ -2,16 +2,5 @@ spring:
   profile:
     active: prod
 
-#Esto puede ser personalizado el nombre (database).
-# Necesitamos un Data sourse -> podríamos utilizar uno de java, pero no sería lo mas correcto, dado que no esta optimizado
-# para leer este tipo de configuración.
-# Lo mejor es utilizar HikariCP dado que esta optimizada para manejo JDBC
-database:
-  host: localhost
-  port: 5432
-  username: postgres
-  password: postgres
-  database: orders
-
 server:
   port:1808
