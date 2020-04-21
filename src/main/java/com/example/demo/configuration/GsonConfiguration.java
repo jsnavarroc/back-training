@@ -18,7 +18,6 @@ public class GsonConfiguration {
     // La idea es solo ver esta linea una sola vez.
     @Bean
     public Gson gson(){
-        Function<String, Password> creator = Password::of;
         return new GsonBuilder()
                 .registerTypeAdapter(UserName.class, new UserNameAdapter())
                 .registerTypeAdapter(Password.class, new StringValueAdapter<Password>(Password::of))
