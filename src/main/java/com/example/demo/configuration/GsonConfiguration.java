@@ -21,7 +21,7 @@ public class GsonConfiguration {
         Function<String, Password> creator = Password::of;
         return new GsonBuilder()
                 .registerTypeAdapter(UserName.class, new UserNameAdapter())
-                .registerTypeAdapter(Password.class, new StringValueAdapter<Password>(creator))
+                .registerTypeAdapter(Password.class, new StringValueAdapter<Password>(Password::of))
                 .create();
     }
 }
