@@ -12,8 +12,8 @@ public interface GsonAdapter<T> extends JsonDeserializer<T>, JsonSerializer<T> {
         return object.toString();
     }
 
-    public Password creator(String value){
-        return Password.of(value);
+    public default Password creator(String value, Function<String, Password> creator){
+        return creator.apply(value);
     }
 
     public static void main(String[] args) {
