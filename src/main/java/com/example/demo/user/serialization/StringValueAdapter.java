@@ -15,7 +15,7 @@ public class StringValueAdapter<T extends StringSerializable> implements GsonAda
     @Override
     public T deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         String value = jsonElement.getAsString();
-        return null;
+        return factory.apply(value);
     }
 
     @Override
