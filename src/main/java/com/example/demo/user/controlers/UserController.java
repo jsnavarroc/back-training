@@ -1,5 +1,6 @@
 package com.example.demo.user.controlers;
 
+import com.example.demo.user.domain.CreateUserRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +13,8 @@ import java.util.Map;
 public class UserController {
 
     @PostMapping
-    public String createUser(@RequestBody Map<String, Object> body) {
-        return body.toString();
+    public String createUser(@RequestBody CreateUserRequest userBody) {
+        return userBody.toString();
     }
 }
 

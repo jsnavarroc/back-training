@@ -6,8 +6,8 @@ import java.lang.reflect.Type;
 import java.util.function.Function;
 
 public class StringValueAdapter<T extends StringSerializable> implements GsonAdapter<T> {
-    private final Function<String, T> factory;
 
+    private final Function<String, T> factory;
     public StringValueAdapter(Function<String, T> factory) {
         this.factory = factory;
     }
@@ -19,8 +19,8 @@ public class StringValueAdapter<T extends StringSerializable> implements GsonAda
     }
 
     @Override
-    public JsonElement serialize(T t, Type type, JsonSerializationContext jsonSerializationContext) {
-        String value = t.valueOf();
+    public JsonElement serialize(T src, Type type, JsonSerializationContext jsonSerializationContext) {
+        String value = src.valueOf();
         return new JsonPrimitive(value);
     }
 }
