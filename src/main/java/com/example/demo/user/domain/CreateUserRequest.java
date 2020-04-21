@@ -5,6 +5,6 @@ import lombok.Value;
 @Value(staticConstructor = "from")
 public class CreateUserRequest {
     UserName username;
-    String password;
+    Password password;
 
 }
