@@ -26,14 +26,13 @@ public class DatasourceConfiguration {
 
     @Bean
     public DataSource hikariDatasource(DatabaseCredentials credentials){
-        System.out.println("credentials>>>"+credentials);
         HikariConfig config = new HikariConfig();
-        String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", credentials.getHost(), credentials.getPort(), credentials.getDatabase() );
-        config.setJdbcUrl(jdbcUrl);
         config.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
+        config.addDataSourceProperty("databaseName", credentials.getDatabase());
+        config.addDataSourceProperty("portNumber", credentials.getPort());
+        config.addDataSourceProperty("serverName", credentials.getHost());
         config.setUsername(credentials.getUsername());
         config.setPassword(credentials.getPassword());
-
         return new HikariDataSource(config);
 
     }
