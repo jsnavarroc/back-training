@@ -11,7 +11,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
-
     @PostMapping
     public String createUser(@RequestBody CreateUserRequest userBody) {
         return userBody.toString();
