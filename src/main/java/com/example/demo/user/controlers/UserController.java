@@ -1,22 +1,25 @@
 package com.example.demo.user.controlers;
 
 import com.example.demo.user.domain.CreateUserRequest;
+import com.example.demo.user.domain.UserCreated;
 import com.example.demo.user.services.UserServices;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/user")
+@RequiredArgsConstructor
 public class UserController {
     private final UserServices services;
 
     @PostMapping
-    public String createUser(@RequestBody CreateUserRequest userBody) {
-        return userBody.toString();
+    public UserCreated createUser(@RequestBody CreateUserRequest userBody) {
+        return services.userCreated(userBody.getUsername(), userBody.getPassword());
+    }
+
+    @GetMapping("/{id}")
+    public UserCreated getUserById(@PathVariable Long id){
+        return services.findById(id);
     }
 }
 

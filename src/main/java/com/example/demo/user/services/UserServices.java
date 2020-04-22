@@ -20,4 +20,8 @@ public class UserServices {
     public UserCreated userCreated(UserName userName, Password password){
         return repository.createOne(userName, password);
     }
+
+    public  UserCreated findById(Long id){
+        return repository.findById(id);
+    }
 }
