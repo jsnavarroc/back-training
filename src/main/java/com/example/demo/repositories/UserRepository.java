@@ -6,5 +6,5 @@ import com.example.demo.user.domain.UserName;
 
 public interface UserRepository {
     UserCreated createOne(UserName userName, Password password);
-    UserCreated findOne(UserName userName);
+    UserCreated findById(Long id);
 }
