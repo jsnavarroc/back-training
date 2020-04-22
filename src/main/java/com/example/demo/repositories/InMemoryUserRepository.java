@@ -3,12 +3,10 @@ package com.example.demo.repositories;
 import com.example.demo.user.domain.Password;
 import com.example.demo.user.domain.UserCreated;
 import com.example.demo.user.domain.UserName;
-import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
 public class InMemoryUserRepository  implements UserRepository{
     private final Map<Long, UserCreated> state = new HashMap<>();
 
