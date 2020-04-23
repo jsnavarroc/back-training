@@ -1,4 +1,4 @@
-package com.example.demo.repositories;
+package com.example.demo.user.repositories;
 
 import com.example.demo.user.domain.Password;
 import com.example.demo.user.domain.UserCreated;
