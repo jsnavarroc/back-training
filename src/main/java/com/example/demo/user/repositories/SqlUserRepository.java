@@ -63,7 +63,7 @@ public class SqlUserRepository implements UserRepository{
 
     @Override
     public UserCreated findById(Long id) {
-        String SQL = "select ID, USERNAME, PASSWORD from USERS where ID = ?";
+        String SQL = "SELECT ID, USERNAME, PASSWORD FROM USERS WHERE ID = ?";
         Object[] objects = {id};
 
         RowMapper<UserCreated> rowMapper = (resultSet, i) -> {
@@ -76,7 +76,6 @@ public class SqlUserRepository implements UserRepository{
         * con el metodo queryForObject solo obtendremos la primera linea que cuampla con la
         * condicion SQL, si colocamos el metodo queryForList retornara todos
         * */
-        jdbcTemplate.queryForObject(SQL, objects, rowMapper );
-        return null;
+        return jdbcTemplate.queryForObject(SQL, objects, rowMapper );
     }
 }
