@@ -13,10 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 @Repository
 @Qualifier("users-sql")
@@ -42,7 +39,7 @@ public class SqlUserRepository implements UserRepository{
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
        PreparedStatementCreator psc = connection -> {
-           PreparedStatement ps = connection.prepareStatement(SQL);
+           PreparedStatement ps = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
            ps.setString(1, userName.getValue());
            ps.setString(2, password.getValue());
            return ps;
