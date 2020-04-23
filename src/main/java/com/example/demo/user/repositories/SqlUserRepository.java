@@ -22,6 +22,13 @@ public class SqlUserRepository implements UserRepository{
 
     @Override
     public UserCreated createOne(UserName userName, Password password) {
+        String SQL = "INCERT INTO USER (USERNAME, PASSWORD) VALUES (?.?)";
+
+        jdbcTemplate.update(
+          SQL,
+          userName.getValue(),
+          password.getValue()
+        );
         return null;
     }
 
