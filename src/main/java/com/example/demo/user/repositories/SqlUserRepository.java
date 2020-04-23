@@ -66,14 +66,11 @@ public class SqlUserRepository implements UserRepository{
         String SQL = "select ID, USERNAME, PASSWORD from USERS where ID = ?";
         Object[] objects = {id};
 
-        RowMapper<UserCreated> rowMapper = new RowMapper<UserCreated>() {
-            @Override
-            public UserCreated mapRow(ResultSet resultSet, int i) throws SQLException {
-                long id = resultSet.getLong("ID");
-                UserName username = UserName.of(resultSet.getString("USERNAME"));
-                Password password = Password.of(resultSet.getString("PASSWORD"));
-                return UserCreated.of(username, password, id);
-            }
+        RowMapper<UserCreated> rowMapper = (resultSet, i) -> {
+            long id1 = resultSet.getLong("ID");
+            UserName username = UserName.of(resultSet.getString("USERNAME"));
+            Password password = Password.of(resultSet.getString("PASSWORD"));
+            return UserCreated.of(username, password, id1);
         };
         /* *
         * con el metodo queryForObject solo obtendremos la primera linea que cuampla con la
