@@ -24,7 +24,7 @@ public class SqlUserRepository implements UserRepository{
 
     @Override
     public UserCreated createOne(UserName userName, Password password) {
-        String SQL = "INCERT INTO USER (USERNAME, PASSWORD) VALUES (?.?)";
+        String SQL = "INSERT INTO USERS (USERNAME, PASSWORD) VALUES (?, ?)";
 
         PreparedStatementSetter pss = preparedStatement -> {
             preparedStatement.setString(1, userName.getValue());
