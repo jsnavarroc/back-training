@@ -2,6 +2,7 @@ package com.example.demo.user.services;
 
 import com.example.demo.common.Business;
 import com.example.demo.user.domain.*;
+import com.example.demo.user.exceptions.UserAlreadyExistsException;
 import com.example.demo.user.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,7 +20,8 @@ public class UserServices {
     public UserOperation userCreated(UserName userName, Password password){
         Optional<UserCreated> userExistence = repository.findByUserName(userName);
         if(userExistence.isPresent()){
-            return UserOperationFailure.of(String.format("User %s already existis.", userName.getValue()));
+            UserOperationFailure exeption = UserOperationFailure.of(UserAlreadyExistsException.of(userName));
+            return exeption;
         }else {
             UserCreated userCreated = repository.createOne(userName,password);
             return UserOperationSuccess.of(userCreated);

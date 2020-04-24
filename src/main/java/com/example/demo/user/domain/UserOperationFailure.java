@@ -1,10 +1,11 @@
 package com.example.demo.user.domain;
 
+import com.example.demo.user.exceptions.UserException;
 import lombok.Value;
 
 @Value(staticConstructor = "of")
 public class UserOperationFailure  implements UserOperation{
-    String message;
+    UserException exception;
 
     @Override
     public UserCreated value() {
@@ -13,7 +14,7 @@ public class UserOperationFailure  implements UserOperation{
 
     @Override
     public String errorMessage() {
-        return message;
+        return exception.getMessage();
     }
 
     @Override
