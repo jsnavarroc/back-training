@@ -3,25 +3,20 @@ package com.example.demo.user.repositories;
 import com.example.demo.user.domain.Password;
 import com.example.demo.user.domain.UserCreated;
 import com.example.demo.user.domain.UserName;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 
-@Repository
-@Qualifier("users-sql")
 public class SqlUserRepository implements UserRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public SqlUserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
