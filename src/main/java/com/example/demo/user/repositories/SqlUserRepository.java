@@ -18,6 +18,13 @@ public class SqlUserRepository implements UserRepository{
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert simpleJdbcInsert;
 
+    private RowMapper<UserCreated> rowMapper = (resultSet, i) -> {
+        long id1 = resultSet.getLong("ID");
+        UserName username = UserName.of(resultSet.getString("USERNAME"));
+        Password password = Password.of(resultSet.getString("PASSWORD"));
+        return UserCreated.of(username, password, id1);
+    };
+
     public SqlUserRepository(JdbcTemplate jdbcTemplate, SimpleJdbcInsert simpleJdbcInsert) {
         this.jdbcTemplate = jdbcTemplate;
         this.simpleJdbcInsert = simpleJdbcInsert;
@@ -61,13 +68,6 @@ public class SqlUserRepository implements UserRepository{
     public Optional<UserCreated> findById(Long id) {
         String SQL = "SELECT ID, USERNAME, PASSWORD FROM USERS WHERE ID = ?";
         Object[] objects = {id};
-
-        RowMapper<UserCreated> rowMapper = (resultSet, i) -> {
-            long id1 = resultSet.getLong("ID");
-            UserName username = UserName.of(resultSet.getString("USERNAME"));
-            Password password = Password.of(resultSet.getString("PASSWORD"));
-            return UserCreated.of(username, password, id1);
-        };
         try {
             /* *
             * con el metodo queryForObject solo obtendremos la primera linea que cuampla con la
@@ -75,6 +75,17 @@ public class SqlUserRepository implements UserRepository{
             * */
             return Optional.ofNullable(jdbcTemplate.queryForObject(SQL, objects, rowMapper ));
 
+        }catch (EmptyResultDataAccessException e){
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<UserCreated> findByUserName(UserName userName) {
+        String SQL = "SELECT ID, USERNAME, PASSWORD FROM USERS WHERE USERNAME = ?";
+        Object[] objects = {userName.getValue()};
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(SQL, objects, rowMapper ));
         }catch (EmptyResultDataAccessException e){
             return Optional.empty();
         }

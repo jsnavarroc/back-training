@@ -1,9 +1,7 @@
 package com.example.demo.user.services;
 
 import com.example.demo.common.Business;
-import com.example.demo.user.domain.Password;
-import com.example.demo.user.domain.UserCreated;
-import com.example.demo.user.domain.UserName;
+import com.example.demo.user.domain.*;
 import com.example.demo.user.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,8 +16,14 @@ public class UserServices {
         this.repository = repository;
     }
 
-    public UserCreated userCreated(UserName userName, Password password){
-        return repository.createOne(userName, password);
+    public UserOperation userCreated(UserName userName, Password password){
+        Optional<UserCreated> userExistence = repository.findByUserName(userName);
+        if(userExistence.isPresent()){
+            return UserOperationFailure.of(String.format("User %s already existis.", userName.getValue()));
+        }else {
+            UserCreated userCreated = repository.createOne(userName,password);
+            return UserOperationSuccess.of(userCreated);
+        }
     }
 
     public Optional<UserCreated> findById(Long id){

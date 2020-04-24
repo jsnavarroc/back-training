@@ -24,4 +24,9 @@ public class InMemoryUserRepository  implements UserRepository{
     public Optional<UserCreated> findById(Long id) {
         return Optional.ofNullable(state.get(id));
     }
+
+    @Override
+    public Optional<UserCreated> findByUserName(UserName userName) {
+        return Optional.empty();
+    }
 }
