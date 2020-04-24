@@ -20,8 +20,8 @@ public class UserServices {
     public UserOperation userCreated(UserName userName, Password password){
         Optional<UserCreated> userExistence = repository.findByUserName(userName);
         if(userExistence.isPresent()){
-            UserOperationFailure exeption = UserOperationFailure.of(UserAlreadyExistsException.of(userName));
-            return exeption;
+            UserAlreadyExistsException exeption = UserAlreadyExistsException.of(userName);
+            return  UserOperationFailure.of(exeption);
         }else {
             UserCreated userCreated = repository.createOne(userName,password);
             return UserOperationSuccess.of(userCreated);

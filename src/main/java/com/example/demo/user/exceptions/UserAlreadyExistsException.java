@@ -9,8 +9,9 @@ import lombok.Value;
 public class UserAlreadyExistsException extends UserException {
     UserName userName;
 
-    @Override
-    public String getMessage() {
-        return String.format("User %s already existis.", userName.getValue());
+    private UserAlreadyExistsException(UserName userName) {
+        super(String.format("User %s already exists", userName.getValue()));
+        this.userName = userName;
     }
 }
+
