@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -16,9 +17,11 @@ import java.sql.Statement;
 public class SqlUserRepository implements UserRepository{
 
     private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert simpleJdbcInsert;
 
-    public SqlUserRepository(JdbcTemplate jdbcTemplate) {
+    public SqlUserRepository(JdbcTemplate jdbcTemplate, SimpleJdbcInsert simpleJdbcInsert) {
         this.jdbcTemplate = jdbcTemplate;
+        this.simpleJdbcInsert = simpleJdbcInsert;
     }
 
 

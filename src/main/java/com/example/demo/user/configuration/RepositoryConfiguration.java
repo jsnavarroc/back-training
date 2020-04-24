@@ -7,14 +7,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class RepositoryConfiguration {
 
     @Bean
     @Profile({"dev", "prod"})
-    public UserRepository userRepository(JdbcTemplate jdbcTemplate){
-        return new SqlUserRepository(jdbcTemplate);
+    public UserRepository userRepository(JdbcTemplate jdbcTemplate, DataSource dataSource){
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+                .withCatalogName("USERS")
+                .usingGeneratedKeyColumns("ID");
+
+        return new SqlUserRepository(jdbcTemplate, simpleJdbcInsert);
     }
 
 
