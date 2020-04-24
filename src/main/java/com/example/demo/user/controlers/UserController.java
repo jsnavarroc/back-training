@@ -6,6 +6,8 @@ import com.example.demo.user.services.UserServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserCreated getUserById(@PathVariable Long id){
+    public Optional<UserCreated> getUserById(@PathVariable Long id){
         return services.findById(id);
     }
 }

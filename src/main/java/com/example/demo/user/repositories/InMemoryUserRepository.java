@@ -6,6 +6,7 @@ import com.example.demo.user.domain.UserName;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class InMemoryUserRepository  implements UserRepository{
@@ -20,7 +21,7 @@ public class InMemoryUserRepository  implements UserRepository{
     }
 
     @Override
-    public UserCreated findById(Long id) {
-        return state.get(id);
+    public Optional<UserCreated> findById(Long id) {
+        return Optional.ofNullable(state.get(id));
     }
 }

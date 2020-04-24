@@ -5,8 +5,10 @@ import com.example.demo.user.domain.UserCreated;
 import com.example.demo.user.domain.UserName;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository {
     UserCreated createOne(UserName userName, Password password);
-    UserCreated findById(Long id);
+    Optional<UserCreated> findById(Long id);
 }

@@ -3,6 +3,7 @@ package com.example.demo.user.repositories;
 import com.example.demo.user.domain.Password;
 import com.example.demo.user.domain.UserCreated;
 import com.example.demo.user.domain.UserName;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
@@ -10,6 +11,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class SqlUserRepository implements UserRepository{
 
@@ -56,7 +58,7 @@ public class SqlUserRepository implements UserRepository{
     }
 
     @Override
-    public UserCreated findById(Long id) {
+    public Optional<UserCreated> findById(Long id) {
         String SQL = "SELECT ID, USERNAME, PASSWORD FROM USERS WHERE ID = ?";
         Object[] objects = {id};
 
@@ -66,10 +68,15 @@ public class SqlUserRepository implements UserRepository{
             Password password = Password.of(resultSet.getString("PASSWORD"));
             return UserCreated.of(username, password, id1);
         };
-        /* *
-        * con el metodo queryForObject solo obtendremos la primera linea que cuampla con la
-        * condicion SQL, si colocamos el metodo queryForList retornara todos
-        * */
-        return jdbcTemplate.queryForObject(SQL, objects, rowMapper );
+        try {
+            /* *
+            * con el metodo queryForObject solo obtendremos la primera linea que cuampla con la
+            * condicion SQL, si colocamos el metodo queryForList retornara todos
+            * */
+            return Optional.ofNullable(jdbcTemplate.queryForObject(SQL, objects, rowMapper ));
+
+        }catch (EmptyResultDataAccessException e){
+            return Optional.empty();
+        }
     }
 }

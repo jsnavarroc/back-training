@@ -7,6 +7,8 @@ import com.example.demo.user.domain.UserName;
 import com.example.demo.user.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 @Business
 public class UserServices {
     private  final  UserRepository repository;
@@ -20,7 +22,7 @@ public class UserServices {
         return repository.createOne(userName, password);
     }
 
-    public  UserCreated findById(Long id){
+    public Optional<UserCreated> findById(Long id){
         return repository.findById(id);
     }
 }
