@@ -4,15 +4,12 @@ import com.example.demo.user.domain.Password;
 import com.example.demo.user.domain.UserCreated;
 import com.example.demo.user.domain.UserName;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SqlUserRepository implements UserRepository{
 
@@ -27,12 +24,7 @@ public class SqlUserRepository implements UserRepository{
 
     @Override
     public UserCreated createOne(UserName userName, Password password) {
-        String SQL = "INSERT INTO USERS (USERNAME, PASSWORD) VALUES (?, ?)";
-
-        PreparedStatementSetter pss = preparedStatement -> {
-            preparedStatement.setString(1, userName.getValue());
-            preparedStatement.setString(2, password.getValue());
-        };
+     /*String SQL = "INSERT INTO USERS (USERNAME, PASSWORD) VALUES (?, ?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -48,7 +40,14 @@ public class SqlUserRepository implements UserRepository{
             keyHolder
         );
 
-        Long key = keyHolder.getKey().longValue();
+        Long key = keyHolder.getKey().longValue();*/
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("USERNAME", userName.getValue());
+        parameters.put("PASSWORD", password.getValue());
+
+        Number number = simpleJdbcInsert.executeAndReturnKey(parameters);
+        long key = number.longValue();
         return UserCreated.of(
                 userName,
                 password,
