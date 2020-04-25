@@ -1,6 +1,9 @@
 package co.jsnvarroc.orders.configuration;
 
+import co.jsnvarroc.orders.product.domain.BasePrice;
 import co.jsnvarroc.orders.product.domain.ProductId;
+import co.jsnvarroc.orders.product.domain.TaxRate;
+import co.jsnvarroc.orders.product.serialization.BigDecimalAdapter;
 import co.jsnvarroc.orders.product.serialization.ProductIdAdpter;
 import co.jsnvarroc.orders.user.domain.Password;
 import co.jsnvarroc.orders.user.domain.UserName;
@@ -39,6 +42,8 @@ public class GsonConfiguration {
                     }
                 })
                 .registerTypeAdapter(ProductId.class, new ProductIdAdpter())
+                .registerTypeAdapter(BasePrice.class, new BigDecimalAdapter<>(BasePrice::of))
+                .registerTypeAdapter(TaxRate.class, new BigDecimalAdapter<>(TaxRate::of))
                 .create();
     }
 }
