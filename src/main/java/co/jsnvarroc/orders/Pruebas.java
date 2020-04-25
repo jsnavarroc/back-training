@@ -1,8 +1,6 @@
 package co.jsnvarroc.orders;
 
-import co.jsnvarroc.orders.product.domain.BasePrice;
-import co.jsnvarroc.orders.product.domain.ProductId;
-import co.jsnvarroc.orders.product.domain.TaxRate;
+import co.jsnvarroc.orders.product.domain.*;
 
 import java.math.BigDecimal;
 
@@ -19,5 +17,14 @@ public class Pruebas {
         String value3 = "0.2";
         TaxRate taxRate = TaxRate.of(new BigDecimal(value3));
         System.out.println(taxRate);
+
+        String value4 = "Zapatos";
+        Name name = Name.of(value4);
+        System.out.println(name);
+
+        String value5 = "Son para los pies";
+        Description description = Description.of(value5);
+        System.out.println(description);
+        System.out.println(description.getValue());
     }
 }

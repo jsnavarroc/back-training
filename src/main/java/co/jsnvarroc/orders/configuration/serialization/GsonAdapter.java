@@ -1,4 +1,4 @@
-package co.jsnvarroc.orders.user.serialization;
+package co.jsnvarroc.orders.configuration.serialization;
 
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonSerializer;

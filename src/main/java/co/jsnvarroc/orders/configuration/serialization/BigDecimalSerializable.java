@@ -1,4 +1,4 @@
-package co.jsnvarroc.orders.product.serialization;
+package co.jsnvarroc.orders.configuration.serialization;
 
 import java.math.BigDecimal;
 

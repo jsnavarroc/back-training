@@ -2,7 +2,7 @@ package co.jsnvarroc.orders.product.domain;
 
 
 import co.jsnvarroc.orders.common.Preconditions;
-import co.jsnvarroc.orders.product.serialization.BigDecimalSerializable;
+import co.jsnvarroc.orders.configuration.serialization.BigDecimalSerializable;
 import lombok.Value;
 
 import java.math.BigDecimal;

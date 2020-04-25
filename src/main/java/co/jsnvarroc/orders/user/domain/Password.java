@@ -1,7 +1,7 @@
 package co.jsnvarroc.orders.user.domain;
 
 import co.jsnvarroc.orders.common.Preconditions;
-import co.jsnvarroc.orders.user.serialization.StringSerializable;
+import co.jsnvarroc.orders.configuration.serialization.StringSerializable;
 import lombok.Value;
 import org.apache.commons.lang3.StringUtils;
 
