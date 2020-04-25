@@ -4,11 +4,11 @@ import lombok.Value;
 
 @Value(staticConstructor = "from")
 public class Product {
-    ProductId id;
+    ProductId productId;
     Name name;
     Description description;
     BasePrice basePrice;
     TaxRate taxRate;
-    ProductStatusEnum productStatus;
     InventoryQuantity inventoryQuantity;
+    ProductStatusEnum productStatusEnum;
 }

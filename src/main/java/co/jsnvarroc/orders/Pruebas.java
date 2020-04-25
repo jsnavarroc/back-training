@@ -35,7 +35,11 @@ public class Pruebas {
         ProductStatusEnum productStatus = ProductStatusEnum.valueOf("ERASER");
         System.out.println(productStatus);
 
+        Long a = 1L;
 
+        System.out.println(a>1);
 
+     /*   Product product = Product.from(productId,name,description,basePrice,taxRate,inventoryQuantity);
+        System.out.println(product);*/
     }
 }

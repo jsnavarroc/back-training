@@ -8,6 +8,6 @@ public class ProductOperationRequest {
     Description description;
     BasePrice basePrice;
     TaxRate taxRate;
-    ProductStatusEnum productStatus;
+    ProductStatusEnum productStatusEnum;
     InventoryQuantity inventoryQuantity;
 }

@@ -10,12 +10,12 @@ public class Description implements StringSerializable {
 
     public Description(String value) {
         Preconditions.checkNotNull(value);
-        Preconditions.checkArgument(value.length()> 2 &&  value.length() <= 280);
+        Preconditions.checkArgument(value.length() <= 280);
         this.value = value;
     }
 
     @Override
     public String valueOf() {
-        return null;
+        return value;
     }
 }
