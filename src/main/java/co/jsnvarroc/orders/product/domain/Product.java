@@ -9,6 +9,6 @@ public class Product {
     Description description;
     BasePrice basePrice;
     TaxRate taxRate;
-    ProductStatus productStatus;
+    ProductStatusEnum productStatus;
     InventoryQuantity inventoryQuantity;
 }

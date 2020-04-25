@@ -26,5 +26,16 @@ public class Pruebas {
         Description description = Description.of(value5);
         System.out.println(description);
         System.out.println(description.getValue());
+
+        Integer value6 = 1;
+        InventoryQuantity  inventoryQuantity = InventoryQuantity.of(value6);
+        System.out.println(inventoryQuantity);
+        System.out.println(inventoryQuantity.getValue());
+
+        ProductStatusEnum productStatus = ProductStatusEnum.valueOf("ERASER");
+        System.out.println(productStatus);
+
+
+
     }
 }

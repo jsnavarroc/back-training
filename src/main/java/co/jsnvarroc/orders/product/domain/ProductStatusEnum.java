@@ -1,6 +1,6 @@
 package co.jsnvarroc.orders.product.domain;
 
-public enum ProductStatus {
+public enum ProductStatusEnum {
     ERASER,
     PUBLISHED;
 
