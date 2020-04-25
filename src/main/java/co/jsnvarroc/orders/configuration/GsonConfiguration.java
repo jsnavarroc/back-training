@@ -1,5 +1,7 @@
 package co.jsnvarroc.orders.configuration;
 
+import co.jsnvarroc.orders.product.domain.ProductId;
+import co.jsnvarroc.orders.product.serialization.ProductIdAdpter;
 import co.jsnvarroc.orders.user.domain.Password;
 import co.jsnvarroc.orders.user.domain.UserName;
 import co.jsnvarroc.orders.user.exceptions.UserException;
@@ -36,6 +38,7 @@ public class GsonConfiguration {
                         return jsonObject;
                     }
                 })
+                .registerTypeAdapter(ProductId.class, new ProductIdAdpter())
                 .create();
     }
 }
