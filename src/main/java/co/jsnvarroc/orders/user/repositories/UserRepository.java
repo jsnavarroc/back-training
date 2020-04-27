@@ -13,3 +13,4 @@ public interface UserRepository {
     Optional<UserCreated> findById(Long id);
     Optional<UserCreated> findByUserName(UserName userName);
 }
+
