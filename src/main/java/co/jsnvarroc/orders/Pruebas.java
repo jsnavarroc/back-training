@@ -1,6 +1,7 @@
 package co.jsnvarroc.orders;
 
 import co.jsnvarroc.orders.product.domain.*;
+import co.jsnvarroc.orders.product.repositories.SqlProductRepository;
 
 import java.math.BigDecimal;
 
@@ -39,7 +40,17 @@ public class Pruebas {
 
         System.out.println(a>1);
 
-     /*   Product product = Product.from(productId,name,description,basePrice,taxRate,inventoryQuantity);
-        System.out.println(product);*/
+        ProductOperationRequest productOperationRequest = ProductOperationRequest.from(name,description,basePrice,taxRate, productStatus, inventoryQuantity);
+        System.out.println(productOperationRequest.getBasePrice().valueOf());
+        Product product = Product.from(
+                        productId,
+                        productOperationRequest.getName(),
+                        productOperationRequest.getDescription(),
+                        productOperationRequest.getBasePrice(),
+                        productOperationRequest.getTaxRate(),
+                productOperationRequest.getInventoryQuantity(),
+                productOperationRequest.getProductStatusEnum()
+                );
+        System.out.println(product);
     }
 }
