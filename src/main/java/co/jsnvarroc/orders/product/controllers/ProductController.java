@@ -1,14 +1,13 @@
 package co.jsnvarroc.orders.product.controllers;
 
-import co.jsnvarroc.orders.product.domain.InventoryQuantity;
-import co.jsnvarroc.orders.product.domain.ProductId;
-import co.jsnvarroc.orders.product.domain.ProductOperation;
-import co.jsnvarroc.orders.product.domain.ProductOperationRequest;
+import co.jsnvarroc.orders.product.domain.*;
 import co.jsnvarroc.orders.product.services.ProductServies;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/products")
@@ -26,8 +25,18 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ProductOperation getDayHour(@PathVariable Long id) {
+    public ProductOperation findById(@PathVariable Long id) {
         ProductId productId = ProductId.of(id);
         return servies.findById(productId);
+    }
+
+    @GetMapping("/")
+    public List<Product> findAll() {
+        return servies.findAll();
+    }
+    @PutMapping("/{id}")
+    public ProductOperation updateOne(@PathVariable Long id, @RequestBody ProductOperationRequest productOperationRequest) {
+        ProductId productId = ProductId.of(id);
+        return servies.updateOne(productId,productOperationRequest);
     }
 }

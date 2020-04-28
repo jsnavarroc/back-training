@@ -5,6 +5,8 @@ import co.jsnvarroc.orders.product.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductServies {
     private final ProductRepository productRepository;
@@ -21,6 +23,13 @@ public class ProductServies {
 
     public ProductOperation findById(ProductId productId){
         return  productRepository.findById(productId);
+    }
+
+    public List<Product> findAll(){
+        return productRepository.findAll();
+    }
+    public ProductOperation updateOne(ProductId productId, ProductOperationRequest productOperationRequest){
+        return productRepository.updateOne(productId,productOperationRequest);
     }
 
 }
