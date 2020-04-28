@@ -1,6 +1,7 @@
 package co.jsnvarroc.orders.product.controllers;
 
 import co.jsnvarroc.orders.product.domain.InventoryQuantity;
+import co.jsnvarroc.orders.product.domain.ProductId;
 import co.jsnvarroc.orders.product.domain.ProductOperation;
 import co.jsnvarroc.orders.product.domain.ProductOperationRequest;
 import co.jsnvarroc.orders.product.services.ProductServies;
@@ -24,9 +25,9 @@ public class ProductController {
                 .body(productOperation);
     }
 
-    @GetMapping("/{value}")
-    public InventoryQuantity getDayHour(@PathVariable Integer value) {
-        InventoryQuantity inventoryQuantity = InventoryQuantity.of(value);
-        return inventoryQuantity;
+    @GetMapping("/{id}")
+    public ProductOperation getDayHour(@PathVariable Long id) {
+        ProductId productId = ProductId.of(id);
+        return servies.findById(productId);
     }
 }

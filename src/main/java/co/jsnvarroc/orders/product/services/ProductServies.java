@@ -14,8 +14,13 @@ public class ProductServies {
         this.productRepository = productRepository;
     }
 
-    public ProductOperationSuccess insertProduct(ProductOperationRequest productOperationRequest){
+    public ProductOperation insertProduct(ProductOperationRequest productOperationRequest){
         Product product = productRepository.insertOne(productOperationRequest);
         return ProductOperationSuccess.of(product);
     }
+
+    public ProductOperation findById(ProductId productId){
+        return  productRepository.findById(productId);
+    }
+
 }

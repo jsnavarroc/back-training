@@ -1,12 +1,15 @@
 package co.jsnvarroc.orders.product.repositories;
 
-import co.jsnvarroc.orders.product.domain.Product;
-import co.jsnvarroc.orders.product.domain.ProductId;
-import co.jsnvarroc.orders.product.domain.ProductOperationRequest;
+import co.jsnvarroc.orders.product.domain.*;
+import co.jsnvarroc.orders.product.exceptions.ProductDoesNotExists;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -20,10 +23,21 @@ public class SqlProductRepository implements  ProductRepository{
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    private RowMapper<Product> rowMapper = (resultSet, i) -> {
+        ProductId productId = ProductId.of(Long.valueOf(resultSet.getString("ID")));
+        Name name = Name.of(resultSet.getString("NAME"));
+        Description description = Description.of(resultSet.getString("DESCRIPTION"));
+        BasePrice basePrice = BasePrice.of(new BigDecimal(resultSet.getString("BASE_PRICE")));
+        TaxRate taxRate = TaxRate.of(new BigDecimal(resultSet.getString("TAX_RATE")));
+        ProductStatusEnum productOperationEnum = ProductStatusEnum.valueOf(resultSet.getString("PRODUCT_STATUS"));
+        InventoryQuantity inventoryQuantity = InventoryQuantity.of(Integer.valueOf(resultSet.getString("INVENTORY_QUANTITY")));
+        Product product = Product.from(productId,name,description,basePrice,taxRate, inventoryQuantity, productOperationEnum);
+        return product;
+    };
+
 
     @Override
     public Product insertOne(ProductOperationRequest productOperationRequest) {
-        System.out.println(">>>>"+productOperationRequest);
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("NAME", productOperationRequest.getName().getValue());
         parameters.put("DESCRIPTION", productOperationRequest.getDescription().getValue());
@@ -32,11 +46,7 @@ public class SqlProductRepository implements  ProductRepository{
         parameters.put("PRODUCT_STATUS", productOperationRequest.getProductStatusEnum());
         parameters.put("INVENTORY_QUANTITY", productOperationRequest.getInventoryQuantity().getValue());
         Number number = simpleJdbcInsert.executeAndReturnKey(parameters);
-        System.out.println("number>>>>>"+number);
-        System.out.println(parameters);
-        System.out.println("parameters>>>>>"+parameters);
         ProductId productId = ProductId.of((Long) number);
-        System.out.println("productId>>>>>"+productId);
         Product product = Product.from(
                 productId,
                 productOperationRequest.getName(),
@@ -50,22 +60,30 @@ public class SqlProductRepository implements  ProductRepository{
     }
 
     @Override
-    public Optional<Product> findById(ProductId productId) {
-        return Optional.empty();
+    public ProductOperation findById(ProductId productId) {
+
+        String SQL = "SELECT * FROM PRODUCTS WHERE ID = ?";
+        Object[] objects = {productId.getValue()};
+        try {
+            Product product = jdbcTemplate.queryForObject(SQL, objects, rowMapper );
+            return ProductOperationSuccess.of(product);
+        }catch (EmptyResultDataAccessException e){
+            return ProductOperationFailure.of(ProductDoesNotExists.of(productId));
+        }
     }
 
     @Override
-    public Optional<Product> findAll() {
-        return Optional.empty();
+    public List<Product> findAll() {
+        return null;
     }
 
     @Override
-    public Optional<Product> updateOne(ProductId productId, ProductOperationRequest productOperationRequest) {
-        return Optional.empty();
+    public ProductOperation updateOne(ProductId productId, ProductOperationRequest productOperationRequest) {
+        return null;
     }
 
     @Override
-    public Optional<ProductOperationRequest> deleteOne(ProductId productId) {
-        return Optional.empty();
+    public ProductOperation deleteOne(ProductId productId) {
+        return null;
     }
 }
