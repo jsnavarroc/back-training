@@ -3,19 +3,21 @@ package co.jsnvarroc.orders.product.repositories;
 import co.jsnvarroc.orders.product.domain.Product;
 import co.jsnvarroc.orders.product.domain.ProductId;
 import co.jsnvarroc.orders.product.domain.ProductOperationRequest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@Repository
+
 public class SqlProductRepository implements  ProductRepository{
     private final SimpleJdbcInsert simpleJdbcInsert;
+    private final JdbcTemplate jdbcTemplate;
 
-    public SqlProductRepository(SimpleJdbcInsert simpleJdbcInsert) {
+    public SqlProductRepository(JdbcTemplate jdbcTemplate, SimpleJdbcInsert simpleJdbcInsert) {
         this.simpleJdbcInsert = simpleJdbcInsert;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
 
