@@ -10,7 +10,7 @@ public class ProductId {
 
     public ProductId(Long value) {
         Preconditions.checkNotNull(value);
-        Preconditions.checkArgument(value>1L);
+        Preconditions.checkArgument(value>=1L);
         this.value = value;
     }
 }

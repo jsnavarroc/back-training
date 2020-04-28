@@ -31,9 +31,12 @@ public class SqlProductRepository implements  ProductRepository{
         parameters.put("TAX_RATE", productOperationRequest.getTaxRate().getValue());
         parameters.put("PRODUCT_STATUS", productOperationRequest.getProductStatusEnum());
         parameters.put("INVENTORY_QUANTITY", productOperationRequest.getInventoryQuantity().getValue());
-        //Number number = simpleJdbcInsert.executeAndReturnKey(parameters);
+        Number number = simpleJdbcInsert.executeAndReturnKey(parameters);
+        System.out.println("number>>>>>"+number);
         System.out.println(parameters);
-        ProductId productId = ProductId.of((long) 2);
+        System.out.println("parameters>>>>>"+parameters);
+        ProductId productId = ProductId.of((Long) number);
+        System.out.println("productId>>>>>"+productId);
         Product product = Product.from(
                 productId,
                 productOperationRequest.getName(),

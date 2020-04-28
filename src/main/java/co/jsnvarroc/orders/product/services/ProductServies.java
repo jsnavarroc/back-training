@@ -1,8 +1,6 @@
 package co.jsnvarroc.orders.product.services;
 
-import co.jsnvarroc.orders.product.domain.Product;
-import co.jsnvarroc.orders.product.domain.ProductId;
-import co.jsnvarroc.orders.product.domain.ProductOperationRequest;
+import co.jsnvarroc.orders.product.domain.*;
 import co.jsnvarroc.orders.product.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +14,8 @@ public class ProductServies {
         this.productRepository = productRepository;
     }
 
-    public Product insertProduct(ProductOperationRequest productOperationRequest){
+    public ProductOperationSuccess insertProduct(ProductOperationRequest productOperationRequest){
         Product product = productRepository.insertOne(productOperationRequest);
-        return product;
+        return ProductOperationSuccess.of(product);
     }
 }
