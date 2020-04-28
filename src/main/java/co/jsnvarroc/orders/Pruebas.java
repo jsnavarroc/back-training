@@ -1,6 +1,7 @@
 package co.jsnvarroc.orders;
 
 import co.jsnvarroc.orders.product.domain.*;
+import co.jsnvarroc.orders.product.repositories.ProductRepository;
 import co.jsnvarroc.orders.product.repositories.SqlProductRepository;
 
 import java.math.BigDecimal;
@@ -41,7 +42,7 @@ public class Pruebas {
         System.out.println(a>1);
 
         ProductOperationRequest productOperationRequest = ProductOperationRequest.from(name,description,basePrice,taxRate, productStatus, inventoryQuantity);
-        System.out.println(productOperationRequest.getBasePrice().valueOf());
+        System.out.println(productOperationRequest);
         Product product = Product.from(
                         productId,
                         productOperationRequest.getName(),
@@ -53,4 +54,5 @@ public class Pruebas {
                 );
         System.out.println(product);
     }
+
 }

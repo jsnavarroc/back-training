@@ -17,8 +17,6 @@ public class UserName implements StringSerializable {
         Preconditions.checkArgument(value.length() >= 6 );
         this.value = value;
     }
-    
-    
 
     @Override
     public String valueOf() {

@@ -4,11 +4,13 @@ import co.jsnvarroc.orders.product.domain.Product;
 import co.jsnvarroc.orders.product.domain.ProductId;
 import co.jsnvarroc.orders.product.domain.ProductOperationRequest;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Repository
 public class SqlProductRepository implements  ProductRepository{
     private final SimpleJdbcInsert simpleJdbcInsert;
 
@@ -19,6 +21,7 @@ public class SqlProductRepository implements  ProductRepository{
 
     @Override
     public Product insertOne(ProductOperationRequest productOperationRequest) {
+        System.out.println(">>>>"+productOperationRequest);
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("NAME", productOperationRequest.getName().getValue());
         parameters.put("DESCRIPTION", productOperationRequest.getDescription().getValue());
@@ -26,8 +29,19 @@ public class SqlProductRepository implements  ProductRepository{
         parameters.put("TAX_RATE", productOperationRequest.getTaxRate().getValue());
         parameters.put("PRODUCT_STATUS", productOperationRequest.getProductStatusEnum());
         parameters.put("INVENTORY_QUANTITY", productOperationRequest.getInventoryQuantity().getValue());
+        //Number number = simpleJdbcInsert.executeAndReturnKey(parameters);
         System.out.println(parameters);
-        return null;
+        ProductId productId = ProductId.of((long) 2);
+        Product product = Product.from(
+                productId,
+                productOperationRequest.getName(),
+                productOperationRequest.getDescription(),
+                productOperationRequest.getBasePrice(),
+                productOperationRequest.getTaxRate(),
+                productOperationRequest.getInventoryQuantity(),
+                productOperationRequest.getProductStatusEnum()
+        );
+        return product;
     }
 
     @Override
