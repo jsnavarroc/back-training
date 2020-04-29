@@ -39,4 +39,9 @@ public class ProductController {
         ProductId productId = ProductId.of(id);
         return servies.updateOne(productId,productOperationRequest);
     }
+    @DeleteMapping("/{id}")
+    public ProductOperation updateOne(@PathVariable Long id) {
+        ProductId productId = ProductId.of(id);
+        return servies.deleteOne(productId);
+    }
 }

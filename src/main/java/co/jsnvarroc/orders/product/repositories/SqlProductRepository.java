@@ -85,7 +85,6 @@ public class SqlProductRepository implements  ProductRepository{
 
     @Override
     public ProductOperation updateOne(ProductId productId, ProductOperationRequest productOperationRequest) {
-        String updateQuery = "update Student set age = ? where id = ?";
         String SQL = "UPDATE PRODUCTS SET NAME = ?, DESCRIPTION = ?, BASE_PRICE= ?, TAX_RATE = ?, PRODUCT_STATUS = ?, INVENTORY_QUANTITY = ? WHERE ID = ?";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -119,6 +118,20 @@ public class SqlProductRepository implements  ProductRepository{
 
     @Override
     public ProductOperation deleteOne(ProductId productId) {
-        return null;
+        ProductOperation productOperation = findById(productId);
+        String SQL = "DELETE FROM PRODUCTS WHERE ID = ?";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        PreparedStatementCreator psc = connection -> {
+            PreparedStatement ps = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setLong(1, productId.getValue());
+            return ps;
+        };
+        int Update = jdbcTemplate.update(psc,keyHolder);
+        if(Update == 1){
+            return productOperation;
+        }else {
+            return productOperation;
+        }
+
     }
 }

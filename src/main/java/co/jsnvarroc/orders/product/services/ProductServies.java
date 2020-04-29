@@ -31,5 +31,8 @@ public class ProductServies {
     public ProductOperation updateOne(ProductId productId, ProductOperationRequest productOperationRequest){
         return productRepository.updateOne(productId,productOperationRequest);
     }
+    public ProductOperation deleteOne(ProductId productId){
+        return productRepository.deleteOne(productId);
+    }
 
 }
