@@ -2,6 +2,7 @@ package co.jsnvarroc.orders.configuration;
 
 import co.jsnvarroc.orders.product.domain.*;
 import co.jsnvarroc.orders.configuration.serialization.BigDecimalAdapter;
+import co.jsnvarroc.orders.product.exceptions.ProductException;
 import co.jsnvarroc.orders.product.serialization.InventoryQuantityAdapter;
 import co.jsnvarroc.orders.product.serialization.ProductIdAdpter;
 import co.jsnvarroc.orders.user.domain.Password;
@@ -46,6 +47,16 @@ public class GsonConfiguration {
                 .registerTypeAdapter(BasePrice.class, new BigDecimalAdapter<>(BasePrice::of))
                 .registerTypeAdapter(TaxRate.class, new BigDecimalAdapter<>(TaxRate::of))
                 .registerTypeAdapter(InventoryQuantity.class, new InventoryQuantityAdapter())
+                .registerTypeAdapter(ProductException.class, new JsonSerializer<ProductException>() {
+                    @Override
+                    public JsonElement serialize(ProductException src, Type typeOfSrc, JsonSerializationContext context) {
+                        JsonObject jsonObject = new JsonObject();
+                        String message = src.getMessage();
+                        JsonPrimitive errorValue = new JsonPrimitive(message);
+                        jsonObject.add("error", errorValue);
+                        return jsonObject;
+                    }
+                })
                 .create();
     }
 }
