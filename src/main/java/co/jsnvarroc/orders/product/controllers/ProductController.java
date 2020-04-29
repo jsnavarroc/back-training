@@ -25,9 +25,14 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ProductOperation findById(@PathVariable Long id) {
+    public ResponseEntity<ProductOperation> findById(@PathVariable Long id) {
         ProductId productId = ProductId.of(id);
-        return servies.findById(productId);
+        ProductOperation productOperation = servies.findById(productId);
+        if(productOperation.isValid()) {
+            return ResponseEntity.ok(productOperation);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(productOperation);
     }
 
     @GetMapping("/")
@@ -35,13 +40,23 @@ public class ProductController {
         return servies.findAll();
     }
     @PutMapping("/{id}")
-    public ProductOperation updateOne(@PathVariable Long id, @RequestBody ProductOperationRequest productOperationRequest) {
+    public ResponseEntity<ProductOperation> updateOne(@PathVariable Long id, @RequestBody ProductOperationRequest productOperationRequest) {
         ProductId productId = ProductId.of(id);
-        return servies.updateOne(productId,productOperationRequest);
+        ProductOperation productOperation = servies.updateOne(productId,productOperationRequest);
+        if(productOperation.isValid()) {
+            return ResponseEntity.ok(productOperation);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(productOperation);
     }
     @DeleteMapping("/{id}")
-    public ProductOperation updateOne(@PathVariable Long id) {
+    public  ResponseEntity<ProductOperation>  updateOne(@PathVariable Long id) {
         ProductId productId = ProductId.of(id);
-        return servies.deleteOne(productId);
+        ProductOperation productOperation = servies.deleteOne(productId);
+        if(productOperation.isValid()) {
+            return ResponseEntity.ok(productOperation);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(productOperation);
     }
 }
