@@ -1,5 +1,8 @@
 package co.jsnvarroc.orders.configuration;
 
+import co.jsnvarroc.orders.configuration.domain.DatabaseCredentials;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -12,7 +15,7 @@ import javax.sql.DataSource;
 public class DatasourceConfiguration {
 
     @Bean
-    @Profile({"test", "dev"})
+    @Profile({"test"})
     public DataSource testDatasource(){
         return new EmbeddedDatabaseBuilder()
             .setType(EmbeddedDatabaseType.H2)
@@ -21,7 +24,7 @@ public class DatasourceConfiguration {
             .build();
     }
 
-  /*  @Bean
+   @Bean
     public DataSource hikariDatasource(DatabaseCredentials credentials){
         HikariConfig config = new HikariConfig();
         config.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
@@ -32,6 +35,6 @@ public class DatasourceConfiguration {
         config.setPassword(credentials.getPassword());
         return new HikariDataSource(config);
 
-    }*/
+    }
 
 }
