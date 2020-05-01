@@ -1,6 +1,6 @@
 database:
   host: localhost
-  port: 5433
+  port: 5434
   username: postgres
-  password: 123456789
+  password: postgres
   database: orders

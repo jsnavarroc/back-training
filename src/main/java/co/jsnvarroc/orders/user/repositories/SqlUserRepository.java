@@ -18,9 +18,9 @@ public class SqlUserRepository implements UserRepository{
     private final SimpleJdbcInsert simpleJdbcInsert;
 
     private RowMapper<UserCreated> rowMapper = (resultSet, i) -> {
-        long id1 = resultSet.getLong("ID");
-        UserName username = UserName.of(resultSet.getString("USERNAME"));
-        Password password = Password.of(resultSet.getString("PASSWORD"));
+        long id1 = resultSet.getLong("id");
+        UserName username = UserName.of(resultSet.getString("username"));
+        Password password = Password.of(resultSet.getString("password"));
         return UserCreated.of(username, password, id1);
     };
 
@@ -51,8 +51,8 @@ public class SqlUserRepository implements UserRepository{
         Long key = keyHolder.getKey().longValue();*/
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("USERNAME", userName.getValue());
-        parameters.put("PASSWORD", password.getValue());
+        parameters.put("username", userName.getValue());
+        parameters.put("password", password.getValue());
 
         Number number = simpleJdbcInsert.executeAndReturnKey(parameters);
         long key = number.longValue();
@@ -65,7 +65,7 @@ public class SqlUserRepository implements UserRepository{
 
     @Override
     public Optional<UserCreated> findById(Long id) {
-        String SQL = "SELECT ID, USERNAME, PASSWORD FROM USERS WHERE ID = ?";
+        String SQL = "SELECT id, username, password FROM users WHERE id = ?";
         Object[] objects = {id};
         try {
             /* *
@@ -81,7 +81,7 @@ public class SqlUserRepository implements UserRepository{
 
     @Override
     public Optional<UserCreated> findByUserName(UserName userName) {
-        String SQL = "SELECT ID, USERNAME, PASSWORD FROM USERS WHERE USERNAME = ?";
+        String SQL = "SELECT id, username, password FROM users WHERE username = ?";
         Object[] objects = {userName.getValue()};
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(SQL, objects, rowMapper ));

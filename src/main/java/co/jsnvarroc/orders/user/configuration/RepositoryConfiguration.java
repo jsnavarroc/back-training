@@ -18,8 +18,8 @@ public class RepositoryConfiguration {
     @Profile({"dev", "prod"})
     public UserRepository userRepository(JdbcTemplate jdbcTemplate, DataSource dataSource){
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName("USERS")
-                .usingGeneratedKeyColumns("ID");
+                .withTableName("users")
+                .usingGeneratedKeyColumns("id");
 
         return new SqlUserRepository(jdbcTemplate, simpleJdbcInsert);
     }
