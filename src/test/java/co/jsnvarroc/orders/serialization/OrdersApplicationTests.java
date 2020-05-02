@@ -1,7 +1,6 @@
 package co.jsnvarroc.orders.serialization;
 
 import co.jsnvarroc.orders.configuration.serialization.StringValueAdapter;
-import co.jsnvarroc.orders.user.domain.UserAuthRequest;
 import co.jsnvarroc.orders.user.domain.UserName;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,7 +29,7 @@ public class OrdersApplicationTests {
         UserName expected =  gson.fromJson(String.format("\"%s\"",userNameString), UserName.class);
         assertEquals(actual, expected);
     }
-¿
+
     @Test
     void serialize() {
         //organizar
