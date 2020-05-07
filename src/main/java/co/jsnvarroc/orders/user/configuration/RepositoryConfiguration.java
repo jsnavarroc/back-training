@@ -26,7 +26,7 @@ public class RepositoryConfiguration {
 
 
     @Bean
-    @Profile({"dev-test"})
+    @Profile({"test"})
     public UserRepository userRepository(){
         return new InMemoryUserRepository();
     }

@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
 public class ElasticSearchConfiguration {
 
     @Bean
+    @Profile({"dev","prod"})
     public Client elasticSearch()throws UnknownHostException {
         InetAddress localhost = InetAddress.getByName("localhost");
         return new PreBuiltTransportClient(Settings.EMPTY)

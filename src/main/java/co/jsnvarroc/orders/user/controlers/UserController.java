@@ -19,7 +19,10 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserOperation> createUser(@RequestBody CreateUserRequest userBody) {
+        System.out.println("userBody>>>" + userBody);
+        System.out.println("userDATA>>>" + userBody.getUsername() + ">>" + userBody.getPassword());
         UserOperation userOperation = services.userCreated(userBody.getUsername(), userBody.getPassword());
+        System.out.println("userOperation>>>"+userOperation);
         if(userOperation.isValid()) {
             return ResponseEntity.ok(userOperation);
         }
