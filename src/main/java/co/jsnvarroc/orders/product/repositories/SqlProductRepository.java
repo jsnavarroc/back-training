@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import java.math.BigDecimal;
+
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class SqlProductRepository implements  ProductRepository{
     }
 
     private RowMapper<Product> rowMapper = (resultSet, i) -> {
-        ProductId productId = ProductId.of(Long.valueOf(resultSet.getString("ID")));
+        ProductId productId = ProductId.of(resultSet.getLong("ID"));
         Name name = Name.of(resultSet.getString("NAME"));
         Description description = Description.of(resultSet.getString("DESCRIPTION"));
         BasePrice basePrice = BasePrice.of(resultSet.getBigDecimal("BASE_PRICE"));
@@ -43,14 +43,15 @@ public class SqlProductRepository implements  ProductRepository{
     @Override
     public Product insertOne(ProductOperationRequest productOperationRequest) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("NAME", productOperationRequest.getName().getValue());
-        parameters.put("DESCRIPTION", productOperationRequest.getDescription().getValue());
-        parameters.put("BASE_PRICE", productOperationRequest.getBasePrice().getValue());
-        parameters.put("TAX_RATE", productOperationRequest.getTaxRate().getValue());
-        parameters.put("PRODUCT_STATUS", productOperationRequest.getProductStatusEnum());
-        parameters.put("INVENTORY_QUANTITY", productOperationRequest.getInventoryQuantity().getValue());
+        parameters.put("name", productOperationRequest.getName().getValue());
+        parameters.put("description", productOperationRequest.getDescription().getValue());
+        parameters.put("base_price", productOperationRequest.getBasePrice().getValue());
+        parameters.put("tax_rate", productOperationRequest.getTaxRate().getValue());
+        parameters.put("product_status", productOperationRequest.getProductStatusEnum());
+        parameters.put("inventory_quantity", productOperationRequest.getInventoryQuantity().getValue());
         Number number = simpleJdbcInsert.executeAndReturnKey(parameters);
-        ProductId productId = ProductId.of((Long) number);
+        ProductId productId = ProductId.of(Long.parseLong(String.valueOf(number)));
+
         Product product = Product.from(
                 productId,
                 productOperationRequest.getName(),
@@ -66,7 +67,7 @@ public class SqlProductRepository implements  ProductRepository{
     @Override
     public ProductOperation findById(ProductId productId) {
 
-        String SQL = "SELECT * FROM PRODUCTS WHERE ID = ?";
+        String SQL = "SELECT * FROM products WHERE id = ?";
         Object[] objects = {productId.getValue()};
         try {
             Product product = jdbcTemplate.queryForObject(SQL, objects,rowMapper);
@@ -78,14 +79,14 @@ public class SqlProductRepository implements  ProductRepository{
 
     @Override
     public List<Product> findAll() {
-        String SQL = "SELECT * FROM PRODUCTS";
+        String SQL = "SELECT * FROM products";
         List<Product> products= jdbcTemplate.query(SQL, rowMapper);
         return products;
     }
 
     @Override
     public ProductOperation updateOne(ProductId productId, ProductOperationRequest productOperationRequest) {
-        String SQL = "UPDATE PRODUCTS SET NAME = ?, DESCRIPTION = ?, BASE_PRICE= ?, TAX_RATE = ?, PRODUCT_STATUS = ?, INVENTORY_QUANTITY = ? WHERE ID = ?";
+        String SQL = "UPDATE products SET NAME = ?, description = ?, base_price= ?, tax_rate = ?, product_status = ?, inventory_quantity = ? WHERE id = ?";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         PreparedStatementCreator psc = connection -> {
@@ -119,7 +120,7 @@ public class SqlProductRepository implements  ProductRepository{
     @Override
     public ProductOperation deleteOne(ProductId productId) {
         ProductOperation productOperation = findById(productId);
-        String SQL = "DELETE FROM PRODUCTS WHERE ID = ?";
+        String SQL = "DELETE FROM products WHERE id = ?";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         PreparedStatementCreator psc = connection -> {
             PreparedStatement ps = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
