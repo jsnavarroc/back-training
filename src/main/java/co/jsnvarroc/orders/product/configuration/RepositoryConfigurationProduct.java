@@ -1,5 +1,6 @@
 package co.jsnvarroc.orders.product.configuration;
 
+import co.jsnvarroc.orders.product.repositories.InMemoryProductRepository;
 import co.jsnvarroc.orders.product.repositories.ProductRepository;
 import co.jsnvarroc.orders.product.repositories.SqlProductRepository;
 import org.springframework.context.annotation.Bean;
@@ -21,5 +22,9 @@ public class RepositoryConfigurationProduct {
 
         return new SqlProductRepository(jdbcTemplate, simpleJdbcInsert);
     }
+
+    @Bean
+    @Profile({"test"})
+    public ProductRepository productRepository() {  return new InMemoryProductRepository(); }
 
 }

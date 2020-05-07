@@ -1,6 +1,7 @@
 package co.jsnvarroc.orders.user.controlers;
 
 import co.jsnvarroc.orders.product.domain.Product;
+import co.jsnvarroc.orders.product.repositories.InMemoryProductRepository;
 import co.jsnvarroc.orders.product.repositories.ProductRepository;
 import co.jsnvarroc.orders.user.domain.CreateUserRequest;
 import co.jsnvarroc.orders.user.domain.Password;
@@ -36,13 +37,18 @@ public class UserControllerSystemTest {
         public UserRepository userRepository(){
             return new InMemoryUserRepository();
         }
+
+        @Bean
+        public ProductRepository productRepository(){
+            return new InMemoryProductRepository();
+        }
     }
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    UserServices services;
+  /*  @MockBean
+    UserServices services;*/
 
     @Autowired
     private Gson gson;
