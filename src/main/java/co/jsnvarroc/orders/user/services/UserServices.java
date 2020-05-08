@@ -18,7 +18,6 @@ public class UserServices {
     }
 
     public UserOperation userCreated(UserName userName, Password password){
-        System.out.println("S>> "+userName+" S>>"+password);
         Optional<UserCreated> userExistence = repository.findByUserName(userName);
         if(userExistence.isPresent()){
             UserAlreadyExistsException exeption = UserAlreadyExistsException.of(userName);

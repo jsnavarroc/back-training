@@ -21,8 +21,10 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -30,7 +32,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class UserControllerSystemTest {
-
+    /* Cunando los bean no se tomand de la configuración se puede crear una funcion como estas
+    * para establecer los beans necesarios para
+    * */
     @org.springframework.boot.test.context.TestConfiguration
     static class TestConfiguration {
         @Bean
@@ -56,30 +60,42 @@ public class UserControllerSystemTest {
     @Test
     void createAndFindUser() throws Exception {
         UserName userName = UserName.of("UserName123");
-        Password password = Password.of("Password1234");
         CreateUserRequest  createUserRequest = CreateUserRequest.of(
                 userName,
-                password
+                Password.of("Password1234")
         );
 
 
+        String username = "Username-1234";
+        String password = "Password-1234";
         String content = this.gson.toJson(createUserRequest);
-        String json = String.format("{\"username\": \"%s\", \"password\": \"%s\"}", userName.getValue(), password.getValue());
-        System.out.println(">>>"+ userName + ">>>" + password + "json>>"+ json );
-        //String json = "{\"username\":\"UserName123\", \"password\":\"Password1234\"}";
+        String json = String.format("{\"username\": \"%s\", \"password\": \"%s\"}", username, password);
+        String createdJson = String.format("{\"value\":{\"userName\":\"%s\",\"password\":\"%s\",\"id\":1}}", username, password);
+        String findJson = String.format("{\"userName\":\"%s\",\"password\":\"%s\",\"id\":1}", username, password);
+
+
+
+
         mockMvc.perform(
                 post("/api/v1/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
         ).andExpect(status().isOk())
+         .andExpect(content().json(createdJson))
          .andDo(mvcResult -> {
             MockHttpServletResponse response = mvcResult.getResponse();
             String responseJson = response.getContentAsString();
-            System.out.println(response);
+            System.out.println(responseJson);
         });
 
         mockMvc.perform(get("/api/v1/user/1"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().json(findJson))
+                .andDo(mvcResult -> {
+                    MockHttpServletResponse response = mvcResult.getResponse();
+                    String responseJson = response.getContentAsString();
+                    System.out.println(responseJson);
+                });
 
     }
 }
