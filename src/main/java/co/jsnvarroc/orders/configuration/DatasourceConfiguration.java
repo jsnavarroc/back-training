@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 public class DatasourceConfiguration {
 
     @Bean
-    @Profile({"dev-test"})
+    @Profile({"test"})
     public DataSource testDatasource(){
         return new EmbeddedDatabaseBuilder()
             .setType(EmbeddedDatabaseType.H2)
@@ -25,7 +25,7 @@ public class DatasourceConfiguration {
     }
 
    @Bean
-   @Profile({"dev","prod", "test"})
+   @Profile({"dev","prod"})
     public DataSource hikariDatasource(DatabaseCredentials credentials){
        System.out.println("credentials>>"+credentials);
         HikariConfig config = new HikariConfig();
