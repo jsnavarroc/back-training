@@ -32,22 +32,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class UserControllerSystemTest {
-    /* Cunando los bean no se tomand de la configuración se puede crear una funcion como estas
-    * para establecer los beans necesarios para
-    * */
-    @org.springframework.boot.test.context.TestConfiguration
-    static class TestConfiguration {
-        @Bean
-        public UserRepository userRepository(){
-            return new InMemoryUserRepository();
-        }
-
-        @Bean
-        public ProductRepository productRepository(){
-            return new InMemoryProductRepository();
-        }
-    }
-
     @Autowired
     private MockMvc mockMvc;
 

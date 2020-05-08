@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 @Configuration
 public class RepositoryConfigurationProduct {
     @Bean
-    @Profile({"dev", "prod"})
     public ProductRepository productRepository(JdbcTemplate jdbcTemplate, DataSource dataSource){
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("products")
@@ -24,7 +23,7 @@ public class RepositoryConfigurationProduct {
     }
 
     @Bean
-    @Profile({"test"})
+    @Profile({"dev-test"})
     public ProductRepository productRepository() {  return new InMemoryProductRepository(); }
 
 }

@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 public class RepositoryConfiguration {
 
     @Bean
-    @Profile({"dev", "prod"})
     public UserRepository userRepository(JdbcTemplate jdbcTemplate, DataSource dataSource){
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("users")
@@ -26,7 +25,7 @@ public class RepositoryConfiguration {
 
 
     @Bean
-    @Profile({"test"})
+    @Profile({"dev-test"})
     public UserRepository userRepository(){
         return new InMemoryUserRepository();
     }
