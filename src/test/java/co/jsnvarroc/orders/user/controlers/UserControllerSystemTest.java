@@ -54,8 +54,8 @@ public class UserControllerSystemTest {
         String password = "Password-1234";
         String content = this.gson.toJson(createUserRequest);
         String json = String.format("{\"username\": \"%s\", \"password\": \"%s\"}", username, password);
-        String createdJson = String.format("{\"value\":{\"userName\":\"%s\",\"password\":\"%s\",\"id\":1}}", username, password);
-        String findJson = String.format("{\"userName\":\"%s\",\"password\":\"%s\",\"id\":1}", username, password);
+        String createdJson = String.format("{\"value\":{\"userName\":\"%s\",\"password\":\"%s\",\"id\":8}}", username, password);
+        String findJson = String.format("{\"userName\":\"%s\",\"password\":\"%s\",\"id\":8}", username, password);
 
 
 
@@ -72,7 +72,7 @@ public class UserControllerSystemTest {
             System.out.println(responseJson);
         });
 
-        mockMvc.perform(get("/api/v1/user/1"))
+        mockMvc.perform(get("/api/v1/user/8"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(findJson))
                 .andDo(mvcResult -> {

@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 public class DatasourceConfiguration {
 
     @Bean
-    @Profile({"test"})
+    @Profile({"dev-test"})
     public DataSource testDatasource(){
         return new EmbeddedDatabaseBuilder()
             .setType(EmbeddedDatabaseType.H2)
@@ -25,8 +25,9 @@ public class DatasourceConfiguration {
     }
 
    @Bean
-   @Profile({"dev","prod"})
+   @Profile({"dev","prod", "test"})
     public DataSource hikariDatasource(DatabaseCredentials credentials){
+       System.out.println("credentials>>"+credentials);
         HikariConfig config = new HikariConfig();
         config.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
         config.addDataSourceProperty("databaseName", credentials.getDatabase());

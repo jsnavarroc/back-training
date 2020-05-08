@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -56,7 +57,7 @@ class UserServicesTest {
             () -> assertFalse(userOperation.isValid(), "Un usuario creado no retorna error al intentar crearlo de nuevo "),
             () -> {
                 // Aqui se valida que el repositorio le este llegando ese UserName al repositorio que ese pone en el when.
-                Mockito.verify(this.repository).findByUserName(userName);
+                Mockito.verify(this.repository, times(1)).findByUserName(userName);
             }
         );
 
