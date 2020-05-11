@@ -1,10 +1,11 @@
 package co.jsnvarroc.orders;
 
-import co.jsnvarroc.orders.product.domain.*;
-import co.jsnvarroc.orders.product.repositories.ProductRepository;
-import co.jsnvarroc.orders.product.repositories.SqlProductRepository;
+import lombok.Value;
 
-import java.math.BigDecimal;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Pruebas {
    /* public static void main(String[] args) {
@@ -57,18 +58,52 @@ public class Pruebas {
 
     public static void main(String[] args) {
 
+        List <Apple> apples = Arrays.asList(
+                new Apple(Color.GREEN, 100),
+                new Apple(Color.GREEN, 150),
+                new Apple(Color.GREEN, 100),
+                new Apple(Color.GREEN, 200),
+                new Apple(Color.RED, 90),
+                new Apple(Color.RED, 140),
+                new Apple(Color.RED, 160),
+                new Apple(Color.RED, 210)
+
+        );
+        List<Apple> result = filter(apples, new RedApples());
+        System.out.println(result);
+
     }
 
     public  static enum Color {
         RED,
         GREEN
     }
-
+    @Value
     public  static class Apple {
         private final Color color;
         private final Integer weight;
-
-
     }
 
+
+    public  static List <Apple> filter(List<Apple> apples, ApplePredicate applePredicate){
+        List<Apple> result = new ArrayList<>();
+        for (Apple apple: apples) {
+            boolean pass = applePredicate.test(apple);
+            if(pass){
+                result.add(apple);
+            }
+        }
+        return result;
+    }
+
+    interface ApplePredicate {
+        boolean test(Apple apple);
+    }
+
+    public static class RedApples implements  ApplePredicate {
+        @Override
+        public boolean test(Apple apple){
+            return apple.getColor().equals(Color.RED);
+        }
+    }
 }
