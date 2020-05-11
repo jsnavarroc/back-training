@@ -47,4 +47,14 @@ class ProductIdTest {
 
     }
 
+    @Test
+    @DisplayName("valueOf retorna el mismo valor ingresado para el id de producto")
+    void valueOfSameValue() {
+        //arrange
+        Long productId = 1L;
+        ProductId productIdInstance = ProductId.of(productId);
+
+        //assertions
+        assertEquals(productId, productIdInstance.getValue());
+    }
 }
