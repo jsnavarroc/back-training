@@ -7,7 +7,7 @@ import co.jsnvarroc.orders.product.repositories.SqlProductRepository;
 import java.math.BigDecimal;
 
 public class Pruebas {
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         Long value = Long.valueOf(5);
         ProductId productId = ProductId.of(value);
         System.out.println(productId);
@@ -53,6 +53,22 @@ public class Pruebas {
                 productOperationRequest.getProductStatusEnum()
                 );
         System.out.println(product);
+    }*/
+
+    public static void main(String[] args) {
+
+    }
+
+    public  static enum Color {
+        RED,
+        GREEN
+    }
+
+    public  static class Apple {
+        private final Color color;
+        private final Integer weight;
+
+
     }
 
 }

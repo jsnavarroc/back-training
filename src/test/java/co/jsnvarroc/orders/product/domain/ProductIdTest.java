@@ -52,9 +52,10 @@ class ProductIdTest {
     void valueOfSameValue() {
         //arrange
         Long productId = 1L;
+        Long expected = 2L;
         ProductId productIdInstance = ProductId.of(productId);
-
+        String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected, productIdInstance.getValue());
         //assertions
-        assertEquals(productId, productIdInstance.getValue());
+        assertEquals(productId, productIdInstance.getValue(), message);
     }
 }
