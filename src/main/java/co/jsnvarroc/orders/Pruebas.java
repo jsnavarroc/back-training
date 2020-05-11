@@ -72,7 +72,7 @@ public class Pruebas {
         List<Apple> result = filter(apples, new ApplePredicate() {
             @Override
             public boolean test(Apple apple) {
-                return apple.getColor().equals(Color.RED);;
+                return apple.getColor().equals(Color.RED);
             }
         });
         System.out.println(result);
