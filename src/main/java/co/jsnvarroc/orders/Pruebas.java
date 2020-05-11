@@ -69,7 +69,12 @@ public class Pruebas {
                 new Apple(Color.RED, 210)
 
         );
-        List<Apple> result = filter(apples, new RedApples());
+        List<Apple> result = filter(apples, new ApplePredicate() {
+            @Override
+            public boolean test(Apple apple) {
+                return apple.getColor().equals(Color.RED);;
+            }
+        });
         System.out.println(result);
 
     }
