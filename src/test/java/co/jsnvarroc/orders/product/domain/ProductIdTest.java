@@ -1,9 +1,14 @@
 package co.jsnvarroc.orders.product.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.api.function.ThrowingSupplier;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,25 +31,25 @@ class ProductIdTest {
 
     }
 
-    @Test
+    @TestFactory
     @DisplayName("Deberia crear Id de product validos")
-    void isShouldPass(){
-        //arrange
-        Long productId = 1L;
-        Long productId1 = 22L;
-        Long productId2 = 50L;
+    Stream<DynamicTest> isShouldPass() {
+        return  Stream.of(1L, 22L, 50L)
+                .map(idProduct -> {
+                    String testName = String.format("debería ser valido para este id: %s", idProduct);
+                    Executable executable = () -> {
+                        // organizar
 
-        //act
-        Executable executable = () -> assertNotNull(ProductId.of(productId));
-
-        //assertions
-        assertAll(
-                executable,
-                () -> assertNotNull(ProductId.of(productId1)),
-                () -> assertNotNull(ProductId.of(productId2))
-        );
-
-
+                        // actuar
+                        ThrowingSupplier<ProductId> productIdThrowingSupplier = () -> ProductId.of(idProduct);
+                        // comprobar
+                        assertAll(
+                                () -> assertDoesNotThrow(productIdThrowingSupplier),
+                                () -> assertNotNull(productIdThrowingSupplier.get())
+                        );
+                    };
+                    return DynamicTest.dynamicTest(testName, executable);
+                });
     }
 
     @Test
