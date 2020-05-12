@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BasePriceTest {
 
     @Test
-    @DisplayName("No debería crear nombre para casos inválidos")
+    @DisplayName("No debería crear base de precio válidos")
     void isShouldNotPass() {
         BigDecimal basePrice1 = null;
         BigDecimal basePrice2 = BigDecimal.valueOf(-1);
