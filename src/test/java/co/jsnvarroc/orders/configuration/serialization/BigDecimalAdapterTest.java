@@ -1,26 +1,29 @@
-package co.jsnvarroc.orders.user.serialization;
+package co.jsnvarroc.orders.configuration.serialization;
 
-import co.jsnvarroc.orders.configuration.serialization.StringValueAdapter;
+import co.jsnvarroc.orders.product.domain.Name;
 import co.jsnvarroc.orders.user.domain.UserName;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class OrdersApplicationTests {
+class BigDecimalAdapterTest {
+
     static Gson gson;
 
     @BeforeAll
     static void setUp(){
         gson = new GsonBuilder()
                 .registerTypeAdapter(UserName.class, new StringValueAdapter<>(UserName::of))
+                .registerTypeAdapter(Name.class, new StringValueAdapter<>(Name::of))
                 .create();
     }
 
     @Test
-    void deserialize() {
+    void deserializeNameUser() {
         //organizar
         String userNameString = "userName123";
         //actuar
@@ -31,7 +34,7 @@ public class OrdersApplicationTests {
     }
 
     @Test
-    void serialize() {
+    void serializeNameUser() {
         //organizar
         String userNameString = "userName123";
         UserName userName = UserName.of(userNameString);
@@ -43,4 +46,6 @@ public class OrdersApplicationTests {
 
         assertEquals(actual, expected);
     }
+
+
 }
