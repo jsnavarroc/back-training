@@ -32,6 +32,8 @@ public class OrdersApplicationTests {
         UserName actual = UserName.of(userNameString);
         //comprueba
         UserName expected =  gson.fromJson(String.format("\"%s\"",userNameString), UserName.class);
+        String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected.getValue(), actual);
+
         assertEquals(actual, expected);
     }
 
@@ -46,8 +48,9 @@ public class OrdersApplicationTests {
 
         //comprueba
         String expected = String.format("\"%s\"",userName.getValue());
+        String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected, actual);
 
-        assertEquals(actual, expected);
+        assertEquals(actual, expected, message);
     }
 
     @Test
@@ -74,8 +77,9 @@ public class OrdersApplicationTests {
 
         //comprueba
         String expected = String.format("\"%s\"",productName.getValue());
+        String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected, actual);
 
-        assertEquals(actual, expected);
+        assertEquals(actual, expected, message);
     }
     @Test
     @DisplayName("Deserializador de la descripción del producto")
@@ -102,7 +106,8 @@ public class OrdersApplicationTests {
 
         //comprueba
         String expected = String.format("\"%s\"",productDescription.getValue());
+        String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected, actual);
 
-        assertEquals(actual, expected);
+        assertEquals(actual, expected, message);
     }
 }

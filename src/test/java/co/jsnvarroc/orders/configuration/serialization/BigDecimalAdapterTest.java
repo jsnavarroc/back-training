@@ -1,12 +1,16 @@
 package co.jsnvarroc.orders.configuration.serialization;
 
+import co.jsnvarroc.orders.product.domain.BasePrice;
 import co.jsnvarroc.orders.product.domain.Name;
+import co.jsnvarroc.orders.product.domain.TaxRate;
 import co.jsnvarroc.orders.user.domain.UserName;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,34 +21,65 @@ class BigDecimalAdapterTest {
     @BeforeAll
     static void setUp(){
         gson = new GsonBuilder()
-                .registerTypeAdapter(UserName.class, new StringValueAdapter<>(UserName::of))
-                .registerTypeAdapter(Name.class, new StringValueAdapter<>(Name::of))
+                .registerTypeAdapter(BasePrice.class, new BigDecimalAdapter<>(BasePrice::of))
+                .registerTypeAdapter(TaxRate.class, new BigDecimalAdapter<>(TaxRate::of))
                 .create();
     }
 
     @Test
-    void deserializeNameUser() {
+    @DisplayName("Deserializador del precio bace")
+    void deserializeBasePrice() {
         //organizar
-        String userNameString = "userName123";
+        BigDecimal basePriceBigDecimal = BigDecimal.valueOf(60.01);
         //actuar
-        UserName actual = UserName.of(userNameString);
+        BasePrice actual = BasePrice.of(basePriceBigDecimal);
         //comprueba
-        UserName expected =  gson.fromJson(String.format("\"%s\"",userNameString), UserName.class);
-        assertEquals(actual, expected);
+        BasePrice expected =  gson.fromJson(String.format("\"%s\"",basePriceBigDecimal), BasePrice.class);
+        String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected.getValue(), actual);
+        assertEquals(actual, expected, message);
     }
 
     @Test
-    void serializeNameUser() {
+    @DisplayName("Serializador del precio bace")
+    void serializeBasePrice() {
         //organizar
-        String userNameString = "userName123";
-        UserName userName = UserName.of(userNameString);
+        BigDecimal basePriceBigDecimal = BigDecimal.valueOf(60.01);
+        BasePrice basePrice = BasePrice.of(basePriceBigDecimal);
         //actuar
-        String actual = gson.toJson(UserName.of(userNameString));
+        String actual = gson.toJson(BasePrice.of(basePriceBigDecimal));
 
         //comprueba
-        String expected = String.format("\"%s\"",userName.getValue());
+        String expected = String.format("%s",basePrice.getValue());
+        String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected, actual);
+        assertEquals(actual, expected, message);
+    }
 
-        assertEquals(actual, expected);
+    @Test
+    @DisplayName("Deserializador de la tasa")
+    void deserializeTaxRate() {
+        //organizar
+        BigDecimal taxRateBigDecimal = BigDecimal.valueOf(0.01);
+        //actuar
+        TaxRate actual = TaxRate.of(taxRateBigDecimal);
+        //comprueba
+        TaxRate expected =  gson.fromJson(String.format("\"%s\"",taxRateBigDecimal), TaxRate.class);
+        String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected.getValue(), actual);
+        assertEquals(actual, expected, message);
+    }
+
+    @Test
+    @DisplayName("Serializador de la tasa")
+    void serializeTaxRate() {
+        //organizar
+        BigDecimal taxRateBigDecimal = BigDecimal.valueOf(0.01);
+        TaxRate taxRateBig = TaxRate.of(taxRateBigDecimal);
+        //actuar
+        String actual = gson.toJson(TaxRate.of(taxRateBigDecimal));
+
+        //comprueba
+        String expected = String.format("%s",taxRateBig.getValue());
+        String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected, actual);
+        assertEquals(actual, expected, message);
     }
 
 
