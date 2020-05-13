@@ -1,9 +1,7 @@
 package co.jsnvarroc.orders.configuration.serialization;
 
 import co.jsnvarroc.orders.product.domain.BasePrice;
-import co.jsnvarroc.orders.product.domain.Name;
 import co.jsnvarroc.orders.product.domain.TaxRate;
-import co.jsnvarroc.orders.user.domain.UserName;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BigDecimalAdapterTest {
 
