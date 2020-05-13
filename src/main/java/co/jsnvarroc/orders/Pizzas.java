@@ -1,11 +1,12 @@
 package co.jsnvarroc.orders;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.minBy;
 
 public class Pizzas {
     public static void main(String[] args) {
@@ -42,63 +43,39 @@ public class Pizzas {
         /*
          * 3. Obtener las 3 pizzas con más calorias
          */
-        List<Pizza> pizzasCaloriesMore= pizzaList.stream()
-                .filter(pizza -> pizza.getCalories()>=700 && pizza.getCalories()<=1500)
+        List<Pizza> pizzasCloriesMayor = pizzaList.stream()
+                .sorted(Comparator.comparing(Pizza::getCalories).reversed())
+                .limit(3)
                 .collect(Collectors.toList());
-        System.out.println("Calories Range>>" + pizzasCaloriesMore);
+        System.out.println(System.out.printf("Pizzas de mayor calorias: %s %n",pizzasCloriesMayor));
 
         /*
          * 4. Obtener las 2 pizzas con menos calorias
          */
 
-        List<Pizza> pizzasSorted = pizzaList.stream()
-                                  .sorted((o1, o2) -> o1.getCalories().compareTo(o2.getCalories()))
-                                  .collect(Collectors.toList());
+        List<Pizza> pizzasCloriesMinor = pizzaList.stream()
+                   .sorted(Comparator.comparing(Pizza::getCalories))
+                   .limit(2)
+                   .collect(Collectors.toList());
+        System.out.println(System.out.printf("Pizza de menor caloria: %s %n",pizzasCloriesMinor));
 
-
-
-
-        Comparator<Pizza> comparator = Comparator.comparingInt(Pizza::getCalories);
-        Optional<Pizza> firstPizzaMin = pizzasSorted.stream().collect(minBy(comparator));
-
-
-        if(firstPizzaMin.isPresent()){
-            System.out.println("Primera pizza con menos calorias>>"+ firstPizzaMin.get());
-            System.out.println("Segunda pizza con menos calorias>>"+ pizzasSorted.get(1));
-
-        }else {
-            System.out.println("No se contro datos");
-        }
-
-
-
-        List<Pizza> twoFirst = pizzaListEmpty.stream().limit(2)
-                              .peek(value -> System.out.printf("limit: %s %n",value)).collect(Collectors.toList());
-
-
-        /*Optional<Pizza> last = pizzasSorted.stream().reduce((first, second) -> second);
-        System.out.println("Primera pizza con menos last>>"+ last);*/
 
 
         /*
          * 5. Del numeral 2 obtener las 2 pizzas con mas calorias
          */
-        Optional<Pizza> lastPizzaMin = pizzasSorted.stream().reduce((first, last) -> last);
-
-        if(lastPizzaMin.isPresent()){
-            System.out.println("Primera pizza con mas calorias>>"+ lastPizzaMin.get());
-            System.out.println("Segunda pizza con mas calorias>>"+ pizzasSorted.get(pizzasSorted.size()-2));
-        }else {
-            System.out.println("No se contro datos");
-        }
-
+        List<Pizza> pizzasCloriesMayora = pizzasCaloriesRange.stream()
+                .sorted(Comparator.comparing(Pizza::getCalories).reversed())
+                .limit(2)
+                .collect(Collectors.toList());
+        System.out.println(System.out.printf("Pizzas de mayor calorias Num 2: %s %n",pizzasCloriesMayora));
 
 
         /*
          * 6. Agrupar las pizzas por tamaño
          */
             Map<Size, List<Pizza>> groupBySize=
-                    pizzasSorted.stream().collect(Collectors.groupingBy(Pizza::getSize));
+                    pizzaList.stream().collect(Collectors.groupingBy(Pizza::getSize));
             System.out.println(groupBySize);
 
         /*
@@ -127,7 +104,7 @@ public class Pizzas {
                 }
             }
         };
-        Map<String, List<Pizza>> collerction = pizzasSorted.stream()
+        Map<String, List<Pizza>> collerction = pizzaList.stream()
                 .collect(Collectors.groupingBy(funtionPizza));
         System.out.println(collerction);
 
