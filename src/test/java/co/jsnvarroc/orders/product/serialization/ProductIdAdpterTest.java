@@ -1,6 +1,6 @@
 package co.jsnvarroc.orders.product.serialization;
 
-import co.jsnvarroc.orders.product.domain.InventoryQuantity;
+import co.jsnvarroc.orders.product.domain.ProductId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,41 +9,40 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class InventoryQuantityAdapterTest {
-
+class ProductIdAdpterTest {
     static Gson gson;
 
     @BeforeAll
     static void setUp(){
         gson = new GsonBuilder()
-                .registerTypeAdapter(InventoryQuantity.class, new InventoryQuantityAdapter())
+                .registerTypeAdapter(ProductId.class, new ProductIdAdpter())
                 .create();
     }
 
     @Test
-    @DisplayName("Deserializador de la cantidad del inventario")
+    @DisplayName("Deserializador del id de producto")
     void deserializeInventoryQuantity() {
         //organizar
-        Integer inventoryQuantityInteger = 100;
+        Long productIdLong = 22L;
         //actuar
-        InventoryQuantity actual = InventoryQuantity.of(inventoryQuantityInteger);
+        ProductId actual = ProductId.of(productIdLong);
         //comprueba
-        InventoryQuantity expected =  gson.fromJson(String.format("\"%s\"",inventoryQuantityInteger), InventoryQuantity.class);
+        ProductId expected =  gson.fromJson(String.format("\"%s\"",productIdLong), ProductId.class);
         String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected.getValue(), actual);
         assertEquals(actual, expected, message);
     }
 
     @Test
-    @DisplayName("Serializador de la cantidad del inventario")
+    @DisplayName("Serializador del id de producto")
     void serializeInventoryQuantity() {
         //organizar
-        Integer inventoryQuantityInteger = 100;
-        InventoryQuantity inventoryQuantity = InventoryQuantity.of(inventoryQuantityInteger);
+        Long productIdLong = 22L;
+        ProductId productId = ProductId.of(productIdLong);
         //actuar
-        String actual = gson.toJson(InventoryQuantity.of(inventoryQuantityInteger));
+        String actual = gson.toJson(ProductId.of(productIdLong));
 
         //comprueba
-        String expected = String.format("%s",inventoryQuantity.getValue());
+        String expected = String.format("%s",productId.getValue());
         String message = String.format("Se esperaba retornar el valor %s para una instancia creada con %s", expected, actual);
         assertEquals(actual, expected, message);
     }
