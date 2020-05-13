@@ -1,4 +1,4 @@
-package co.jsnvarroc.orders.serialization;
+package co.jsnvarroc.orders.user.serialization;
 
 import co.jsnvarroc.orders.configuration.serialization.StringValueAdapter;
 import co.jsnvarroc.orders.user.domain.UserName;
